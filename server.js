@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const chalk = require('chalk')
 const mongoose = require('mongoose')
+const authRouters = require('./routes/authRoutes')
 const app = express()
 
 
@@ -11,6 +12,8 @@ app.use(morgan('dev'))
 app.use(cors())
 app.use(express.urlencoded({extended:true}))  // to accept form data
 app.use(express.json())  // to accept json data
+
+app.use('/api/users', authRouters)
 
 app.get('/', (req, res) => {
     res.send('Server is running')
