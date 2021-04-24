@@ -1,4 +1,5 @@
 const { body } = require('express-validator')
+const User = require('../models/Users')
 
 exports.validatorSignUp = [
     body('name')
@@ -14,7 +15,14 @@ exports.validatorSignUp = [
         .withMessage('Email field Cannot be empty')
         .isEmail()
         .withMessage('Please provide a valid email')
-        .normalizeEmail(),
+        .normalizeEmail()
+        .custom( async email => {
+            let user = await User.findOne({email})
+            if(user){
+                return Promise.reject('User with this email already exists')
+            }
+            return true
+        }),
     body('password')
         .not()
         .isEmpty()

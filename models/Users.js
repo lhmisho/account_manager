@@ -16,13 +16,12 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        maxlength: 30,
         minlength: 5,
         required: true
     },
-    balance: number,
-    income: number,
-    expence: number,
+    balance: Number,
+    income: Number,
+    expence: Number,
     transactions: [
         {
             type: Schema.Types.ObjectId,
